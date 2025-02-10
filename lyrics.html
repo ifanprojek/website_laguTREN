@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lirik Lagu - Lagu Tren</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #1f1c2c, #928dab);
+            font-family: 'Arial', sans-serif;
+        }
+
+        .lyrics-container {
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            transition: 0.3s ease-in-out;
+        }
+
+        .lyrics-container:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .lyrics-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .lyrics-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+        }
+
+        .lyrics-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            transition: 0.3s;
+        }
+
+        p:hover {
+            color: #ffd700;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body class="text-white text-center p-6">
+
+    <!-- Navbar -->
+    <nav class="bg-gray-900 p-4 flex justify-between items-center shadow-lg">
+        <a href="index.html" class="text-white text-lg font-semibold hover:text-yellow-400 transition">
+            ⬅ Kembali ke Beranda
+        </a>
+        <h1 class="text-2xl font-bold">📜 Lirik Lagu</h1>
+        <div></div>
+    </nav>
+
+    <p class="mt-4 text-lg">Nikmati lirik lagu favoritmu di sini:</p>
+
+    <!-- Lirik Lagu -->
+    <div class="lyrics-container w-2/3 mx-auto text-left p-6 mt-6">
+        <p class="font-bold text-yellow-400">🎵 [Verse 1] 🎵</p>
+        <p>Kau bagaikan mentari yang menyinari hariku...</p>
+        <p>Setiap detik bersamamu bagai mimpi yang indah...</p>
+
+        <p class="font-bold text-green-400 mt-4">🎵 [Chorus] 🎵</p>
+        <p>Aku ingin selalu dekat denganmu...</p>
+        <p>Tak ingin terpisahkan walau sesaat...</p>
+
+        <p class="font-bold text-blue-400 mt-4">🎵 [Verse 2] 🎵</p>
+        <p>Hanya kau yang mampu membuat hatiku...</p>
+        <p>Merasa damai, merasa bahagia...</p>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lagu Tren</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(to right, #4A90E2, #1E3A8A);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar h1 {
+            color: white;
+        }
+
+        .navbar a {
+            color: white;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .navbar a:hover {
+            color: #FFD700;
+        }
+
+        /* Input Pencarian */
+        #searchInput {
+            border: 2px solid #ccc;
+            transition: all 0.3s ease;
+        }
+
+        #searchInput:focus {
+            border-color: #4A90E2;
+            box-shadow: 0 0 10px rgba(74, 144, 226, 0.4);
+        }
+
+        /* Tombol kategori */
+        .category-btn {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .category-btn:hover {
+            transform: scale(1.1);
+            opacity: 0.9;
+        }
+
+        /* Efek hover pada kartu lagu */
+        .song-item {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .song-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 text-gray-900 transition-all duration-300">
+
+    <!-- Navbar -->
+    <nav class="navbar p-4 flex justify-between items-center bg-gray-800 text-white">
+        <h1 class="text-2xl font-bold">Lagu Tren</h1>
+
+        <!-- Tombol Hamburger (Mobile) -->
+        <button id="menu-toggle" class="lg:hidden text-white focus:outline-none text-2xl">
+            ☰
+        </button>
+
+        <!-- Menu Utama (Desktop) -->
+        <div id="menu" class="hidden lg:flex gap-6 items-center">
+            <a href="index.html" class="hover:text-yellow-400">🏠 Home</a>
+            <a href="playlist.html" class="hover:text-yellow-400">🎧 Playlist Favorit</a>
+            <a href="dj-music.html" class="hover:text-green-400">🎵 Music DJ</a>
+            <a href="blog-music.html" class="hover:text-blue-400">📝 Blog Music</a>
+
+            <!-- Dropdown Menu Fitur -->
+            <div class="relative group">
+                <button class="hover:text-purple-400">⚙️ Fitur ▼</button>
+                <div class="absolute hidden group-hover:block bg-gray-900 text-white rounded-md mt-2 py-2 w-48">
+                    <a href="equalizer.html" class="block px-4 py-2 hover:bg-gray-700">🎛 Equalizer</a>
+                    <a href="lyrics.html" class="block px-4 py-2 hover:bg-gray-700">📜 Lirik Lagu</a>
+                    <a href="karaoke.html" class="block px-4 py-2 hover:bg-gray-700">🎤 Karaoke Mode</a>
+                    <a href="tentang.html" class="block px-4 py-2 hover:bg-gray-700">ℹ️ Tentang LaguTren</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menu Mobile -->
+    <div id="mobile-menu" class="hidden flex-col bg-gray-800 text-white p-4 space-y-2 lg:hidden">
+        <a href="index.html" class="block hover:text-yellow-400">🏠 Home</a>
+        <a href="playlist.html" class="block hover:text-yellow-400">🎧 Playlist Favorit</a>
+        <a href="dj-music.html" class="block hover:text-green-400">🎵 Music DJ</a>
+        <a href="blog-music.html" class="block hover:text-blue-400">📝 Blog Music</a>
+
+        <!-- Menu Fitur di Mobile -->
+        <div class="border-t border-gray-600 pt-2">
+            <span class="text-gray-400">⚙️ Fitur:</span>
+            <a href="equalizer.html" class="block hover:text-purple-400">🎛 Equalizer</a>
+            <a href="lyrics.html" class="block hover:text-purple-400">📜 Lirik Lagu</a>
+            <a href="karaoke.html" class="block hover:text-purple-400">🎤 Karaoke Mode</a>
+            <a href="tentang.html" class="block hover:text-purple-400">ℹ️ Tentang Website</a>
+        </div>
+    </div>
+
+    <!-- Pencarian Lagu -->
+    <div class="container mx-auto p-6">
+        <h2 class="text-3xl font-semibold mb-4">Daftar Lagu Tren</h2>
+
+        <!-- Input Search -->
+        <input type="text" id="searchInput" onkeyup="searchSongs()" placeholder="Cari lagu..."
+            class="w-full p-2 border rounded-md mb-4">
+
+        <!-- Kategori Lagu -->
+        <div class="mb-4">
+            <!-- Untuk Desktop (Scroll Horizontal) -->
+            <div class="hidden md:block overflow-x-auto whitespace-nowrap">
+                <div class="inline-flex space-x-2">
+                    <button class="category-btn px-4 py-2 bg-blue-500 text-white rounded-md"
+                        onclick="filterCategory('all')">Semua</button>
+                    <button class="category-btn px-4 py-2 bg-red-500 text-white rounded-md"
+                        onclick="filterCategory('sad')">Sad</button>
+                    <button class="category-btn px-4 py-2 bg-pink-500 text-white rounded-md"
+                        onclick="filterCategory('cinta')">Cinta</button>
+                    <button class="category-btn px-4 py-2 bg-yellow-500 text-white rounded-md"
+                        onclick="filterCategory('senang')">Senang</button>
+                </div>
+            </div>
+
+            <!-- Untuk Mobile (Hamburger Menu) -->
+            <div class="md:hidden relative">
+                <button onclick="toggleDropdown()"
+                    class="p-2 bg-blue-500 text-white rounded-md flex items-center w-full">
+                    Kategori <span class="ml-2">▼</span>
+                </button>
+                <div id="dropdownMenu" class="hidden absolute bg-white shadow-md mt-2 rounded-md w-full z-10">
+                    <button class="category-btn block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        onclick="filterCategory('all')">Semua</button>
+                    <button class="category-btn block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        onclick="filterCategory('sad')">Sad</button>
+                    <button class="category-btn block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        onclick="filterCategory('cinta')">Cinta</button>
+                    <button class="category-btn block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        onclick="filterCategory('senang')">Senang</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Daftar Lagu -->
+        <div id="songList" class="grid md:grid-cols-3 gap-6">
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="sad">
+                <img src="assets/images/car's.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Car's Outside</h3>
+                <p class="text-gray-600">James Arthur</p>
+                <p class="text-sm text-gray-500">Kategori: Sad</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu1" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu1')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="cinta">
+                <img src="assets/images/mendua.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Mendua</h3>
+                <p class="text-gray-600">Astrid</p>
+                <p class="text-sm text-gray-500">Kategori: Cinta</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu2" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu2')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="senang">
+                <img src="assets/images/asal kau bahagia.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Asal Kau Bahagia</h3>
+                <p class="text-gray-600">Armada</p>
+                <p class="text-sm text-gray-500">Kategori: Senang</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu3" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu3')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="cinta">
+                <img src="assets/images/bunga maaf.jpeg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Bunga Maaf</h3>
+                <p class="text-gray-600">Chord</p>
+                <p class="text-sm text-gray-500">Kategori: Cinta</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu4" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu4')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="sad">
+                <img src="assets/images/imposible.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Impossible </h3>
+                <p class="text-gray-600">James Arthur</p>
+                <p class="text-sm text-gray-500">Kategori: Sad</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu5" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu5')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="sad">
+                <img src="assets/images/jiwa yang bersedih.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Jiwa Yang Bersedih</h3>
+                <p class="text-gray-600">Ghea Indrawari</p>
+                <p class="text-sm text-gray-500">Kategori: Sad</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu6" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu6')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="cinta">
+                <img src="assets/images/masing-masing.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Masing masing</h3>
+                <p class="text-gray-600">Ernie Zakri</p>
+                <p class="text-sm text-gray-500">Kategori: Cinta</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu7" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu7')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="cinta">
+                <img src="assets/images/anugerah terindah.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Anugerah Terindah</h3>
+                <p class="text-gray-600">Andmesh</p>
+                <p class="text-sm text-gray-500">Kategori: Cinta</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu8" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu8')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="cinta">
+                <img src="assets/images/penjaga hati.jpeg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Penjaga Hati</h3>
+                <p class="text-gray-600">Nadhif Basalamah</p>
+                <p class="text-sm text-gray-500">Kategori: Cinta</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu9" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu9')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="sad">
+                <img src="assets/images/somebody pleasure.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Somebody's Pleasure</h3>
+                <p class="text-gray-600">Aziz Hedra</p>
+                <p class="text-sm text-gray-500">Kategori: Sad</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu10" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu10')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="senang">
+                <img src="assets/images/drunk text.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Drunk Text</h3>
+                <p class="text-gray-600">Henry Moodie</p>
+                <p class="text-sm text-gray-500">Kategori: Senang</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu11" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu11')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="sad">
+                <img src="assets/images/reckless.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Reckless</h3>
+                <p class="text-gray-600">Madison Beer</p>
+                <p class="text-sm text-gray-500">Kategori: Sad</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu12" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu12')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="senang">
+                <img src="assets/images/night changes.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Night Changes</h3>
+                <p class="text-gray-600">One Direction's</p>
+                <p class="text-sm text-gray-500">Kategori: Senang</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu13" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu13')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="senang">
+                <img src="assets/images/karena kamu.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Karena kamu</h3>
+                <p class="text-gray-600">Geisha</p>
+                <p class="text-sm text-gray-500">Kategori: Senang</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu14" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu14')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="cinta">
+                <img src="assets/images/garam dan madu.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Garam dan Madu</h3>
+                <p class="text-gray-600">Tenxi</p>
+                <p class="text-sm text-gray-500">Kategori: Cinta</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu15" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu15')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="cinta">
+                <img src="assets/images/melukis senja.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Melukis Senja</h3>
+                <p class="text-gray-600">Budi Doremi</p>
+                <p class="text-sm text-gray-500">Kategori: Cinta</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu16" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu16')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="all">
+                <img src="assets/images/sayang culik aku dong.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Sayang Culik Aku Dong</h3>
+                <p class="text-gray-600">Nisa Fauzia</p>
+                <p class="text-sm text-gray-500">Kategori: ALL</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu17" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu17')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="cinta">
+                <img src="assets/images/cinderella.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Cinderella</h3>
+                <p class="text-gray-600">Radja</p>
+                <p class="text-sm text-gray-500">Kategori: Cinta</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu18" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu18')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="all">
+                <img src="assets/images/apt.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">APT.</h3>
+                <p class="text-gray-600">Rose & Bruno Mars</p>
+                <p class="text-sm text-gray-500">Kategori: ALL</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu19" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu19')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="cinta">
+                <img src="assets/images/ada yang marah.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Ada Yang Marah</h3>
+                <p class="text-gray-600">Matta Band</p>
+                <p class="text-sm text-gray-500">Kategori: Cinta</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu20" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu20')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="cinta">
+                <img src="assets/images/pura pura lupa.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Pura Pura Lupa</h3>
+                <p class="text-gray-600">Mahen</p>
+                <p class="text-sm text-gray-500">Kategori: Cinta</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu21" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu21')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="cinta">
+                <img src="assets/images/sampai jumpa.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Sampai Jumpa</h3>
+                <p class="text-gray-600">Endank Soekamti ( Tami Aulia Cover )</p>
+                <p class="text-sm text-gray-500">Kategori: Cinta</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu22" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu22')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="sad">
+                <img src="assets/images/untuk apa.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Untuk Apa</h3>
+                <p class="text-gray-600">Maudy Ayunda</p>
+                <p class="text-sm text-gray-500">Kategori: Sad</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu23" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu23')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="senang">
+                <img src="assets/images/pesan terakhir.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Pesan Terakhir</h3>
+                <p class="text-gray-600">Lyodra</p>
+                <p class="text-sm text-gray-500">Kategori: Senang</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu24" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu24')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+
+            <div class="song-item bg-white p-4 shadow-md rounded-md" data-category="all">
+                <img src="assets/images/sisa rasa.jpg" class="w-full rounded-md">
+                <h3 class="text-lg font-bold mt-2">Sisa Rasa</h3>
+                <p class="text-gray-600">Mahalini</p>
+                <p class="text-sm text-gray-500">Kategori: ALL</p>
+                <div class="flex justify-between mt-2">
+                    <a href="song.html?song=lagu25" class="text-blue-500">▶️ Putar</a>
+                    <button onclick="addToPlaylist('lagu25')" class="text-red-500">❤️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <!-- Script untuk Toggle Mobile Menu -->
+    <script>
+        document.getElementById("menu-toggle").addEventListener("click", function () {
+            document.getElementById("mobile-menu").classList.toggle("hidden");
+        });
+    </script>
+
+    <script>
+
+        function toggleDropdown() {
+            let dropdown = document.getElementById("dropdownMenu");
+            dropdown.classList.toggle("hidden");
+        }
+
+        // Tutup dropdown jika klik di luar
+        window.addEventListener("click", function (event) {
+            let dropdown = document.getElementById("dropdownMenu");
+            if (!event.target.closest("button") && !dropdown.classList.contains("hidden")) {
+                dropdown.classList.add("hidden");
+            }
+        });
+
+        function addToPlaylist(song) {
+            let playlist = JSON.parse(localStorage.getItem("playlist")) || [];
+            if (!playlist.includes(song)) {
+                playlist.push(song);
+                localStorage.setItem("playlist", JSON.stringify(playlist));
+                alert("Lagu ditambahkan ke playlist!");
+            } else {
+                alert("Lagu sudah ada di playlist!");
+            }
+        }
+
+        function filterCategory(category) {
+            let songs = document.querySelectorAll(".song-item");
+
+            songs.forEach(song => {
+                let songCategory = song.getAttribute("data-category");
+
+                if (category === "all" || songCategory === category) {
+                    song.style.display = "block";
+                } else {
+                    song.style.display = "none";
+                }
+            });
+        }
+
+        function searchSongs() {
+            let input = document.getElementById("searchInput").value.toLowerCase();
+            let songs = document.getElementsByClassName("song-item");
+
+            for (let i = 0; i < songs.length; i++) {
+                let title = songs[i].getElementsByTagName("h3")[0].innerText.toLowerCase();
+                if (title.includes(input)) {
+                    songs[i].style.display = "block";
+                } else {
+                    songs[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

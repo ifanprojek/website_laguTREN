@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Musik Terbaik</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #1a1a2e, #16213e, #0f3460);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .blog-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+        }
+
+        .hero {
+            background: url('https://source.unsplash.com/1600x900/?music,concert') center/cover no-repeat;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-content {
+            position: relative;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+
+<body class="text-white">
+
+    <!-- Navbar -->
+    <nav
+        class="fixed top-0 left-0 w-full p-4 bg-black bg-opacity-50 backdrop-blur-md flex justify-between items-center z-50">
+        <a href="index.html" class="text-white hover:text-yellow-400">&larr; Kembali</a>
+        <h1 class="text-2xl font-bold">🎶 Blog Musik Terbaik</h1>
+        <div></div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Musik Terbaik, Info Terupdate</h1>
+            <p class="text-lg mt-2 text-gray-300">Temukan berita terbaru seputar dunia musik hanya di sini.</p>
+        </div>
+    </div>
+
+    <!-- Blog Section -->
+    <div class="container mx-auto p-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- Blog 1 -->
+            <div class="blog-card p-4">
+                <img src="assets/images/musik elektronik.jpg" alt="Music Blog 1"
+                    class="w-full h-56 object-cover rounded-lg">
+                <h2 class="text-xl font-bold mt-4">🎧 Sejarah Musik Elektronik</h2>
+                <p class="text-gray-300 mt-2">Dari eksperimen suara hingga menjadi genre terbesar di dunia...</p>
+                <a href="https://www.kompasiana.com/juliarni53946/669b9566ed641546d84bd412/sejarah-musik-elektronik-dan-perkembangannya"
+                    class="text-yellow-400 hover:underline block mt-3">Baca Selengkapnya →</a>
+            </div>
+
+            <!-- Blog 2 -->
+            <div class="blog-card p-4">
+                <img src="assets/images/dj terbaik.jpg" alt="Music Blog 2" class="w-full h-56 object-cover rounded-lg">
+                <h2 class="text-xl font-bold mt-4">🔥 DJ Terbaik Tahun Ini</h2>
+                <p class="text-gray-300 mt-2">Siapa yang menguasai panggung festival terbesar dunia?</p>
+                <a href="https://www.caraqu.com/dj-terbaik-dunia-favorit/"
+                    class="text-yellow-400 hover:underline block mt-3">Baca Selengkapnya →</a>
+            </div>
+
+            <!-- Blog 3 -->
+            <div class="blog-card p-4">
+                <img src="assets/images/dj iconic.jpg" alt="Music Blog 3" class="w-full h-56 object-cover rounded-lg">
+                <h2 class="text-xl font-bold mt-4">🎶 Festival Musik Paling Ikonik</h2>
+                <p class="text-gray-300 mt-2">Dari Tomorrowland hingga Coachella, siapa yang terbaik?</p>
+                <a href="https://www.inilah.com/daftar-10-festival-musik-terbesar-di-dunia-coachella-termasuk"
+                    class="text-yellow-400 hover:underline block mt-3">Baca Selengkapnya →</a>
+            </div>
+
+            <!-- Blog 4 -->
+            <div class="blog-card p-4">
+                <img src="assets/images/dj headset.jpg" alt="Music Blog 4" class="w-full h-56 object-cover rounded-lg">
+                <h2 class="text-xl font-bold mt-4">🎵 Headset Terbaik untuk Musik</h2>
+                <p class="text-gray-300 mt-2">Rekomendasi headset terbaik untuk pengalaman audio maksimal.</p>
+                <a href="https://datascripmall.id/blog/rekomendasi-headset/"
+                    class="text-yellow-400 hover:underline block mt-3">Baca Selengkapnya →</a>
+            </div>
+
+            <!-- Blog 5 -->
+            <div class="blog-card p-4">
+                <img src="assets/images/dj rock.jpg" alt="Music Blog 5" class="w-full h-56 object-cover rounded-lg">
+                <h2 class="text-xl font-bold mt-4">🎸 Evolusi Musik Rock</h2>
+                <p class="text-gray-300 mt-2">Dari era klasik hingga rock modern, inilah perjalanannya!</p>
+                <a href="https://superlive.id/supermusic/artikel/super-buzz/10-lagu-rock-terbaik-sepanjang-masa"
+                    class="text-yellow-400 hover:underline block mt-3">Baca Selengkapnya →</a>
+            </div>
+
+            <!-- Blog 6 -->
+            <div class="blog-card p-4">
+                <img src="assets/images/dj hitam.jpg" alt="Music Blog 6" class="w-full h-56 object-cover rounded-lg">
+                <h2 class="text-xl font-bold mt-4">🎵 Apakah Vinyl Masih Populer?</h2>
+                <p class="text-gray-300 mt-2">Tren piringan hitam kembali, apakah masih relevan?</p>
+                <a href="https://hypeabis.id/read/35900/menghidupkan-era-piringan-hitam-ke-hadapan-generasi-baru"
+                    class="text-yellow-400 hover:underline block mt-3">Baca Selengkapnya →</a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

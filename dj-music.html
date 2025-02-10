@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music DJ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #b6aaac, #8879bd);
+        }
+
+        .dj-card {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .dj-card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body class="text-white">
+
+    <!-- Navbar -->
+    <nav class="p-4 flex justify-between items-center bg-gray-900">
+        <a href="index.html" class="text-white hover:text-yellow-400">&larr; Kembali</a>
+        <h1 class="text-2xl font-bold">🎵 Music DJ</h1>
+    </nav>
+
+    <!-- Daftar Lagu DJ -->
+    <div class="container mx-auto p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- DJ Remix 1 -->
+            <div class="dj-card text-center">
+                <img src="https://i.ytimg.com/vi/g6gW__hhSx8/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBFliAei4ZM7qeSrEMiw2AcBV94-w"
+                    alt="DJ Remix 1" class="w-full h-auto rounded-lg shadow-md">
+                <h2 class="text-xl font-bold mt-3">DJ Apt Apt</h2>
+                <p class="text-gray-700">DJ Apt Apt</p>
+                <audio controls class="w-full mt-3">
+                    <source src="assets/audio/dj apt.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+
+            <!-- DJ Remix 2 -->
+            <div class="dj-card text-center">
+                <img src="https://i.ytimg.com/vi/XgVq9x6yKzs/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLDsj2e8eyCsUy8o0nYjnETgxNz4iA"
+                    alt="DJ Remix 2" class="w-full h-auto rounded-lg shadow-md">
+                <h2 class="text-xl font-bold mt-3">DJ Garam dan Madu</h2>
+                <p class="text-gray-700">DJ Garam dan Madu</p>
+                <audio controls class="w-full mt-3">
+                    <source src="assets/audio/dj garam dan madu.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+
+            <!-- DJ Remix 3 -->
+            <div class="dj-card text-center">
+                <img src="https://i.ytimg.com/vi/hzZOqEYnzaQ/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCbjpVvKuVGekIhrWb8BZgjTOCwOA" alt="DJ Remix 3"
+                    class="w-full h-auto rounded-lg shadow-md">
+                <h2 class="text-xl font-bold mt-3">DJ Anugerah Terindah</h2>
+                <p class="text-gray-700">DJ Anugerah Terindah</p>
+                <audio controls class="w-full mt-3">
+                    <source src="assets/audio/dj anugerah terindah.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>

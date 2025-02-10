@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equalizer - Lagu Tren</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #1e3c72, #2a5298);
+            font-family: 'Arial', sans-serif;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            background: #444;
+            border-radius: 5px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .slider:hover {
+            background: #666;
+        }
+
+        .slider::-webkit-slider-thumb {
+            width: 16px;
+            height: 16px;
+            background: #ffcc00;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            background: #ffd700;
+        }
+    </style>
+</head>
+
+<body class="text-white text-center p-6">
+
+    <!-- Navbar -->
+    <nav class="bg-gray-900 p-4 flex justify-between items-center shadow-lg">
+        <a href="index.html" class="text-white text-lg font-semibold hover:text-yellow-400 transition">
+            ⬅ Kembali ke Beranda
+        </a>
+        <h1 class="text-2xl font-bold">🎛 Equalizer</h1>
+        <div></div>
+    </nav>
+
+    <p class="mt-4 text-lg">Atur suara sesuai keinginanmu:</p>
+
+    <!-- Equalizer Controls -->
+    <div class="grid grid-cols-5 gap-6 w-3/4 mx-auto mt-6 bg-gray-800 p-6 rounded-lg shadow-xl">
+        <div>
+            <label class="block text-yellow-400 font-semibold">Bass</label>
+            <input type="range" min="0" max="100" class="slider">
+        </div>
+        <div>
+            <label class="block text-green-400 font-semibold">Mid</label>
+            <input type="range" min="0" max="100" class="slider">
+        </div>
+        <div>
+            <label class="block text-blue-400 font-semibold">Treble</label>
+            <input type="range" min="0" max="100" class="slider">
+        </div>
+        <div>
+            <label class="block text-purple-400 font-semibold">Echo</label>
+            <input type="range" min="0" max="100" class="slider">
+        </div>
+        <div>
+            <label class="block text-red-400 font-semibold">Reverb</label>
+            <input type="range" min="0" max="100" class="slider">
+        </div>
+    </div>
+</body>
+
+</html>

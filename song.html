@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Putar Lagu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 🌈 Background gradient */
+        body {
+            background: linear-gradient(to right, #000000, #c4c1c7);
+        }
+
+        /* 📌 Navbar dengan shadow & efek transparan */
+        .navbar {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        /* 🎵 Pemutar lagu dengan efek card */
+        .player-card {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .player-card:hover {
+            transform: scale(1.02);
+        }
+
+        /* ⭐ Rating bintang hover efek */
+        .star {
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .star:hover {
+            transform: scale(1.2);
+            color: #facc15 !important;
+        }
+
+        /* 💬 Komentar dengan bubble style */
+        .comment-bubble {
+            background: #e2e8f0;
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+
+</head>
+
+<body class="bg-gray-100 text-gray-900">
+    <!-- Navbar -->
+    <nav class="navbar shadow-md p-4 rounded-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-blue-500 font-semibold hover:underline">&larr; Kembali</a>
+            <h1 class="text-2xl font-bold text-gray-800">Pemutar Lagu</h1>
+        </div>
+    </nav>
+
+    <!-- Konten Lagu -->
+    <div class="container mx-auto p-6 flex justify-center">
+        <div class="player-card w-full max-w-md text-center">
+            <h2 class="text-3xl font-bold text-gray-800" id="songTitle">Judul Lagu</h2>
+            <p class="text-gray-600" id="artistName">Artis</p>
+
+            <!-- Gambar Album -->
+            <img id="albumCover" src="assets/images/default.jpg" alt="Album Cover"
+                class="mx-auto mt-3 w-48 h-48 object-cover rounded-lg shadow-md">
+
+            <!-- Pemutar Musik -->
+            <audio controls id="audioPlayer" class="w-full mt-4 rounded-md border">
+                <source src="" type="audio/mpeg">
+            </audio>
+
+            <!-- Tombol Download -->
+            <div class="mt-4">
+                <a id="downloadLink"
+                    class="p-2 bg-blue-500 text-white rounded-md shadow-md transition-all hover:bg-blue-600">📥 Download
+                    Lagu</a>
+            </div>
+
+            <!-- Komentar -->
+            <div class="mt-6 text-left">
+                <h3 class="text-xl font-semibold text-gray-800">Komentar:</h3>
+                <input type="text" id="commentInput"
+                    class="w-full p-2 border rounded-md mt-2 focus:ring focus:ring-blue-300"
+                    placeholder="Tambahkan komentar...">
+                <button onclick="addComment()"
+                    class="bg-blue-500 text-white p-2 rounded-md mt-2 transition-all hover:bg-blue-600">Kirim</button>
+
+                <ul id="commentList" class="mt-4 space-y-2"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        const songs = {
+            "lagu1": {
+                title: "Car's Outside",
+                artist: "James Arthur",
+                src: "assets/audio/Cars Outside.mp3",
+                image: "assets/images/album car's.jpg" // Gambar album lagu 1
+            },
+            "lagu2": {
+                title: "Mendua",
+                artist: "Astrid",
+                src: "assets/audio/mendua.mp3",
+                image: "assets/images/album mendua.jpg" // Gambar album lagu 2
+            },
+            "lagu3": {
+                title: "Asal Kau Bahagia",
+                artist: "Armada",
+                src: "assets/audio/asal kau bahagia.mp3",
+                image: "assets/images/album armada.jpeg" // Gambar album lagu 3
+            },
+            "lagu4": {
+                title: "Bunga Maaf",
+                artist: "Chord",
+                src: "assets/audio/bunga maaf.mp3",
+                image: "assets/images/album bunga maaf.jpg" // Gambar album lagu 4
+            },
+            "lagu5": {
+                title: "Impossible",
+                artist: "James Arthur",
+                src: "assets/audio/impossible.mp3",
+                image: "assets/images/album imposible.jpg" // Gambar album lagu 5
+            },
+            "lagu6": {
+                title: "Jiwa Yang Bersedih",
+                artist: "Ghea Indrawari",
+                src: "assets/audio/jiwa yang bersedih.mp3",
+                image: "assets/images/album jiwa yang bersedih.jpg" // Gambar album lagu 6
+            },
+            "lagu7": {
+                title: "Masing Masing",
+                artist: "Ernie Zakri",
+                src: "assets/audio/masing masing.mp3",
+                image: "assets/images/album masing-masing.jpg" // Gambar album lagu 7
+            },
+            "lagu8": {
+                title: "Anugerah Terindah",
+                artist: "Andmesh",
+                src: "assets/audio/anugerah terindah.mp3",
+                image: "assets/images/album anugerah terindah.jpg" // Gambar album lagu 8
+            },
+            "lagu9": {
+                title: "Penjaga Hati",
+                artist: "Nadhif Basalamah",
+                src: "assets/audio/penjaga hati.mp3",
+                image: "assets/images/album penjaga hati.jpg" // Gambar album lagu 9
+            },
+            "lagu10": {
+                title: "Somebody's Pleasure",
+                artist: "Aziz Hedra",
+                src: "assets/audio/somebody pleasure.mp3",
+                image: "assets/images/album somebody pleasure.jpg" // Gambar album lagu 10
+            },
+            "lagu11": {
+                title: "Drunk Text",
+                artist: "Henry Moodie",
+                src: "assets/audio/drunk text.mp3",
+                image: "assets/images/album drunk text.jpeg" // Gambar album lagu 11
+            },
+            "lagu12": {
+                title: "Reckless",
+                artist: "Medison Beer",
+                src: "assets/audio/reckless.mp3",
+                image: "assets/images/album reckless.jpg" // Gambar album lagu 12
+            },
+            "lagu13": {
+                title: "Night Changes",
+                artist: "One Direction's",
+                src: "assets/audio/night changes.mp3",
+                image: "assets/images/album night changes.jpg" // Gambar album lagu 13
+            },
+            "lagu14": {
+                title: "Karena Kamu",
+                artist: "Geisha",
+                src: "assets/audio/karena kamu.mp3",
+                image: "assets/images/album karena kamu.jpg" // Gambar album lagu 14
+            },
+            "lagu15": {
+                title: "Garam dan Madu",
+                artist: "Tenxi",
+                src: "assets/audio/garam dan madu.mp3",
+                image: "assets/images/album garam dan madu.jpg" // Gambar album lagu 15
+            },
+            "lagu16": {
+                title: "Melukis Senja",
+                artist: "Budi Doremi",
+                src: "assets/audio/melukis senja.mp3",
+                image: "assets/images/album melukis senja.jpeg" // Gambar album lagu 16
+            },
+            "lagu17": {
+                title: "Sayang Culik Aku Dong",
+                artist: "Nisa Fauzia",
+                src: "assets/audio/sayang culik aku dong.mp3",
+                image: "assets/images/album sayang culik aku dong.jpg" // Gambar album lagu 17
+            },
+            "lagu18": {
+                title: "Cinderella",
+                artist: "Radja",
+                src: "assets/audio/cinderella.mp3",
+                image: "assets/images/album cinderella.jpg" // Gambar album lagu 18
+            },
+            "lagu19": {
+                title: "APT.",
+                artist: "Rose & Bruno Mars",
+                src: "assets/audio/apt.mp3",
+                image: "assets/images/album apt.jpg" // Gambar album lagu 19
+            },
+            "lagu20": {
+                title: "Ada Yang Marah",
+                artist: "Matta Band",
+                src: "assets/audio/ada yang marah.mp3",
+                image: "assets/images/album ada yang marah.jpg" // Gambar album lagu 20
+            },
+            "lagu21": {
+                title: "Pura Pura Lupa",
+                artist: "Mahen",
+                src: "assets/audio/pura pura lupa.mp3",
+                image: "assets/images/album pura pura lupa.jpg" // Gambar album lagu 21
+            },
+            "lagu22": {
+                title: "Sampai Jumpa",
+                artist: "Endank Soekamti ( Tami Aulia Cover )",
+                src: "assets/audio/sampai jumpa.mp3",
+                image: "assets/images/album sampai jumpa.jpg" // Gambar album lagu 22
+            },
+            "lagu23": {
+                title: "Untuk Apa",
+                artist: "Maudy Ayunda",
+                src: "assets/audio/untuk apa.mp3",
+                image: "assets/images/album untuk apa.jpg" // Gambar album lagu 23
+            },
+            "lagu24": {
+                title: "Pesan Terakhir",
+                artist: "Lyodra",
+                src: "assets/audio/pesan terakhir.mp3",
+                image: "assets/images/album pesan terakhir.jpg" // Gambar album lagu 24
+            },
+            "lagu25": {
+                title: "Sisa Rasa",
+                artist: "Mahalini",
+                src: "assets/audio/sisa rasa.mp3",
+                image: "assets/images/album sisa rasa.jpg" // Gambar album lagu 25
+            }
+        };
+
+        // Ambil parameter dari URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const songKey = urlParams.get("song");
+
+        if (songKey && songs[songKey]) {
+            const song = songs[songKey];
+
+            // Update konten di halaman
+            document.getElementById("songTitle").textContent = song.title;
+            document.getElementById("artistName").textContent = song.artist;
+            document.getElementById("audioPlayer").src = song.src;
+            document.getElementById("downloadLink").href = song.src;
+            document.getElementById("downloadLink").download = song.title + ".mp3";
+
+            // Update gambar album
+            document.getElementById("albumCover").src = song.image;
+            document.getElementById("albumCover").alt = "Cover " + song.title;
+        }
+
+        // 📝 Tambahkan Komentar
+        function addComment() {
+            let commentInput = document.getElementById("commentInput").value.trim();
+            if (!commentInput) return alert("Komentar tidak boleh kosong!");
+
+            let comments = JSON.parse(localStorage.getItem("comments")) || {};
+            if (!comments[songKey]) comments[songKey] = [];
+            comments[songKey].push(commentInput);
+
+            localStorage.setItem("comments", JSON.stringify(comments));
+            document.getElementById("commentInput").value = "";
+            loadComments();
+        }
+
+        // ❌ Hapus Komentar
+        function deleteComment(index) {
+            let comments = JSON.parse(localStorage.getItem("comments")) || {};
+            if (comments[songKey]) {
+                comments[songKey].splice(index, 1); // Hapus komentar berdasarkan index
+                localStorage.setItem("comments", JSON.stringify(comments));
+                loadComments();
+            }
+        }
+
+        // 🔄 Load Komentar yang Sudah Ada
+        function loadComments() {
+            let comments = JSON.parse(localStorage.getItem("comments")) || {};
+            let commentList = document.getElementById("commentList");
+            commentList.innerHTML = "";
+
+            if (comments[songKey]) {
+                comments[songKey].forEach((comment, index) => {
+                    let li = document.createElement("li");
+                    li.className = "comment-bubble flex justify-between";
+                    li.innerHTML = `
+                        <span>${comment}</span>
+                        <button onclick="deleteComment(${index})" class="text-red-500 hover:text-red-700 text-sm">❌</button>
+                    `;
+                    commentList.appendChild(li);
+                });
+            }
+        }
+
+        // 🚀 Load Data Saat Halaman Dibuka
+        window.onload = function () {
+            loadComments();
+        };
+    </script>
+</body>
+
+</html>

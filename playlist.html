@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist Favorit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-900">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-blue-500 font-semibold hover:text-blue-700 transition">&larr; Kembali</a>
+            <h1 class="text-2xl font-bold">Playlist Favorit 🎵</h1>
+        </div>
+    </nav>
+
+    <!-- Container Playlist -->
+    <div class="container mx-auto p-6">
+        <h2 class="text-3xl font-bold mb-6 text-center">Playlist Favorit Anda</h2>
+
+        <div id="playlistContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        function loadPlaylist() {
+            const playlist = JSON.parse(localStorage.getItem("playlist")) || [];
+            const playlistContainer = document.getElementById("playlistContainer");
+            playlistContainer.innerHTML = ""; // Reset container
+
+            if (playlist.length === 0) {
+                playlistContainer.innerHTML = `
+                    <p class="text-gray-500 text-center text-lg">Belum ada lagu di playlist favorit.</p>
+                `;
+                return;
+            }
+
+            playlist.forEach((song, index) => {
+                let songCard = document.createElement("div");
+                songCard.className = "bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300";
+                songCard.innerHTML = `
+                    <h3 class="text-xl font-semibold text-gray-800">${song}</h3>
+                    <a href="song.html?song=${song}" class="mt-2 block text-blue-500 hover:text-blue-700 font-medium transition">🎶 Putar Lagu</a>
+                    <button onclick="removeFromPlaylist(${index})" class="mt-3 p-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition">❌ Hapus</button>
+                `;
+                playlistContainer.appendChild(songCard);
+            });
+        }
+
+        function removeFromPlaylist(index) {
+            let playlist = JSON.parse(localStorage.getItem("playlist")) || [];
+            playlist.splice(index, 1); // Hapus lagu berdasarkan indeks
+            localStorage.setItem("playlist", JSON.stringify(playlist)); // Simpan perubahan
+            loadPlaylist(); // Muat ulang daftar playlist
+        }
+
+        // Load playlist saat halaman dibuka
+        window.onload = loadPlaylist;
+    </script>
+
+</body>
+</html>
